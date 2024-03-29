@@ -38,19 +38,39 @@ BEGIN
     repeat
         clrscr;
         writeln('Por favor indique la operacion a realizar:  ');
-        writeln('1. Registrar nuevo alumno   ');
+        writeln('1. alumno   ');
         writeln('2. Prestamos   ');
         writeln('3. Libros      ');
         writeln('4. Salir.     ');
         n:=readkey;
+        clrscr;
         case n of
 			'1':begin
-				
+					 writeln('Por favor indique la operacion a realizar:    ');
+				 writeln('1. ingresar nuevos alumnos');
+				 writeln('2. modificar datos de alumnos');
+				 writeln('3. revisar alumnos sancionados');
+				 writeln('0. ir al menu');
+				 n:=readkey;
+				 clrscr;
+				   case n of
+					'1':begin
+						
+						end;
+					'2':begin
+					
+						end;
+					'0':begin
+					end;
+				end;
 			end;
 			'2':begin
 				 writeln('Por favor indique la operacion a realizar:    ');
 				 writeln('1. Registrar prestamos');
 				 writeln('2. Revisar prestamos activo');
+				 writeln('0. ir al menu');
+				 n:=readkey;
+				 clrscr;
 			     case n of
 					'1':begin
 						
@@ -58,12 +78,17 @@ BEGIN
 					'2':begin
 					
 						end;
+					'0':begin
+					end;
 				end;
 			end;
 			'3':begin
 				writeln('Por favor indique la operacion a realizar:');
 				writeln('1. Ingresar nuevo libro');
 				writeln('2. libros disponibles');
+				 writeln('0. ir al menu');
+				n:=readkey;
+				clrscr;
 					case n of
 						'1':begin
 						
@@ -71,8 +96,10 @@ BEGIN
 						'2':begin
 						
 						end;
+						'0':begin
+						end;
 					end;
 			end;
         end;
-	until (n='4')
+	until (n='4');
 END.
