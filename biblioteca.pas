@@ -1,6 +1,6 @@
 program untitled;
 
-uses crt;
+uses crt,sysutils;
 type
 alumno=record
 nombre:string;
@@ -10,8 +10,13 @@ libro=record
 id:string;
 nombre:string;
 end;
+
 var 
 n:char;
+archivo: text;
+persona1: alumno;
+contador: integer;
+  
 function valID(s: string): boolean;
 var i: integer;
 begin
@@ -30,8 +35,49 @@ begin
         end;
     end;
 end;
+procedure existearchivo; 
+
+begin
+    if (FileExists('alumnos.txt')) then
+    begin
+     assign(archivo,'alumnos.txt');
+        end
+        else
+        assign(archivo, 'alumnos.txt');
+		rewrite(archivo);
+        close(archivo);
+        end;
+procedure RegistrarAlumnos;
+
+begin 
+  append(archivo); // Crea un archivo nuevo
+  contador := 1;
+repeat
+    writeln('Ingrese el nombre del alumno:');
+    readln(persona1.nombre);
+  
+    writeln('Ingrese el id del alumno:');
+    readln(persona1.id);
+    writeln(archivo, 'alumno ', contador, ':');
+    writeln(archivo, 'Nombre: ', persona1.nombre);
+    writeln(archivo, 'id: ', persona1.id);
+    writeln(archivo);
+    
+    writeln('¿Desea ingresar otro alumno? (S/N)');
+    readln(n);
+    
+    contador := contador + 1; // Incrementa el contador de personas
+  until (upcase(n) = 'N');
+  
+  close(archivo); // Cierra el archivo
+  
+  writeln('Registros guardados en el archivo "alumnos.txt"');
+end;
+
+
+
 BEGIN
-   
+   existearchivo;
     writeln('Bienvenido al sistema de biblioteca de unimar ');
     writeln('Presione cualquier tecla para continuar...    ');
     readkey;
@@ -55,7 +101,7 @@ BEGIN
 				 clrscr;
 				   case n of
 					'1':begin
-						
+						RegistrarAlumnos;
 						end;
 					'2':begin
 					
@@ -105,4 +151,5 @@ BEGIN
 			end;
         end;
 	until (n='4');
+	
 END.
