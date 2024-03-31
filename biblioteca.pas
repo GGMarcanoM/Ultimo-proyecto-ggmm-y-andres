@@ -45,12 +45,13 @@ begin
         else
         assign(archivo, 'alumnos.txt');
 		rewrite(archivo);
+		writeln(archivo, 'registro de alumnos');
         close(archivo);
         end;
 procedure RegistrarAlumnos;
 
 begin 
-  append(archivo); // Crea un archivo nuevo
+  append(archivo); 
   contador := 1;
 repeat
     writeln('Ingrese el nombre del alumno:');
