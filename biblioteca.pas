@@ -23,26 +23,32 @@ archivo,archivo1,archivo2: text;
 persona3:prestamos;
 persona2:libro;
 persona1: alumno;
-contador,contador1,contador2: integer;
+contador,contador1,contador2,i: integer;
 
-function valID(s: string): boolean;
-var i: integer;
-
+function valnombre(word: String): Boolean;
 begin
-    valID:=true;
-    if (s='') then
+  valnombre := True;
+  for i := 1 to Length(word) do
+  begin
+    if not (UpCase(word[i]) in ['A'..'Z']) then
     begin
-        valID:=false;
-        exit;
+      valnombre := False;
+      Break;
     end;
-    for i:=1 to length(s) do
+  end;
+end;
+
+function valID(s: String): Boolean;
+begin
+  valID := True;
+  for i := 1 to Length(s) do
+  begin
+    if not (s[i] in ['0'..'9']) then
     begin
-        if not (s[i] in ['0'..'9']) then
-        begin
-            valID:=false;
-            exit;
-        end;
+      valID := False;
+      Break;
     end;
+  end;
 end;
 
 procedure existearchivo; 
@@ -89,23 +95,31 @@ begin
   append(archivo); 
   contador := 1;
 repeat
-
+	repeat
+	clrscr;
     writeln('Ingrese el nombre del alumno:');
     readln(persona1.nombre);
+    if not valnombre(persona1.nombre) then
+    writeln('dato ingresado no valido');
+    delay(1500);
+    until valnombre(persona1.nombre);
+    repeat
+    clrscr;
     writeln('Ingrese el id del alumno:');
     readln(persona1.id);
+    if not valID(persona1.id) then
+    writeln('dato ingresado no valido');
+    delay(1500);
+    until valID(persona1.id);
     writeln(archivo, 'alumno ', contador, ':');
     writeln(archivo, 'Nombre: ', persona1.nombre);
     writeln(archivo, 'id: ', persona1.id);
     writeln(archivo);
     writeln('¿Desea ingresar otro alumno? (S/N)');
     readln(n);
-    
     contador := contador + 1; // Incrementa el contador de personas
   until (upcase(n) = 'N');
-  
   close(archivo); // Cierra el archivo
-  
   writeln('Registros guardados en el archivo "alumnos.txt"');
 end;
 
@@ -183,7 +197,6 @@ begin
 end;
 
 procedure RegistrarLibros;
-
 begin 
   append(archivo1); 
   contador1 := 1;
@@ -282,5 +295,5 @@ BEGIN
 			end;
         end;
 	until (n='4');
-	
+	writeln('gracias por usar la biblioteca de unimar');
 END.
