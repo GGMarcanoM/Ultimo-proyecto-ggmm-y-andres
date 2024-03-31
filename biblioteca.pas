@@ -1,6 +1,7 @@
 program untitled;
 
 uses crt,sysutils;
+
 type
 alumno=record
 nombre:string;
@@ -14,20 +15,19 @@ prestamos=record
 id:string;
 nombredelibro:string;
 end;
+
 var 
 linea:string;
 n:char;
-archivo:text;
-archivo1: text;
-archivo2: text;
+archivo,archivo1,archivo2: text;
 persona3:prestamos;
 persona2:libro;
 persona1: alumno;
-contador: integer;
-contador1: integer;
-contador2: integer;
+contador,contador1,contador2: integer;
+
 function valID(s: string): boolean;
 var i: integer;
+
 begin
     valID:=true;
     if (s='') then
@@ -44,64 +44,60 @@ begin
         end;
     end;
 end;
-procedure existearchivo; 
 
+procedure existearchivo; 
 begin
-    if (FileExists('alumnos.txt')) then
+    if not (FileExists('alumnos.txt')) then
     begin
-     assign(archivo,'alumnos.txt');
-        end
-        else
-        assign(archivo, 'alumnos.txt');
+		assign(archivo, 'alumnos.txt');
 		rewrite(archivo);
 		writeln(archivo, 'registro de alumnos');
         close(archivo);
+        end
+        else
+        assign(archivo, 'alumnos.txt');
         end;
         
 procedure existearchivo1; 
-
 begin
-    if (FileExists('libros.txt')) then
+    if not (FileExists('libros.txt')) then
     begin
-     assign(archivo1,'libros.txt');
-        end
-        else
-        assign(archivo1, 'libros.txt');
+		assign(archivo1, 'libros.txt');
 		rewrite(archivo1);
 		writeln(archivo1, 'registro de libros');
         close(archivo1);
+        end
+        else
+        assign(archivo1, 'libros.txt');
         end;
 
 procedure existearchivo2; 
-
 begin
     if (FileExists('prestamos.txt')) then
     begin
-     assign(archivo2,'prestamos.txt');
-        end
-        else
-        assign(archivo2, 'prestamos.txt');
+		assign(archivo2, 'prestamos.txt');
 		rewrite(archivo2);
 		writeln(archivo2, 'registro de prestamos');
         close(archivo2);
+        end
+        else
+        assign(archivo2, 'prestamos.txt');
         end;
         
 procedure RegistrarAlumnos;
-
 begin 
   append(archivo); 
   contador := 1;
 repeat
+
     writeln('Ingrese el nombre del alumno:');
     readln(persona1.nombre);
-  
     writeln('Ingrese el id del alumno:');
     readln(persona1.id);
     writeln(archivo, 'alumno ', contador, ':');
     writeln(archivo, 'Nombre: ', persona1.nombre);
     writeln(archivo, 'id: ', persona1.id);
     writeln(archivo);
-    
     writeln('¿Desea ingresar otro alumno? (S/N)');
     readln(n);
     
@@ -132,7 +128,6 @@ begin
     begin
         readLn( archivo2, linea );    
         writeLn( linea );  
-        readkey;   
     end;
     readkey;
     close( archivo2 );   
@@ -145,11 +140,11 @@ begin
     begin
         readLn( archivo1, linea );    
         writeLn( linea );  
-        readkey;   
     end;
     readkey;
     close( archivo1 );   
     end;
+    
 procedure registrarprestamos;
 begin
   append(archivo2); 
