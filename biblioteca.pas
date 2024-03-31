@@ -27,6 +27,12 @@ contador,contador1,contador2,i: integer;
 
 function valnombre(word: String): Boolean;
 begin
+  if (word='') then
+    begin
+        valnombre:=false;
+        exit;
+    end;
+begin
   valnombre := True;
   for i := 1 to Length(word) do
   begin
@@ -37,8 +43,15 @@ begin
     end;
   end;
 end;
+end;
 
 function valID(s: String): Boolean;
+begin
+   if (s='') then
+    begin
+        valID:=false;
+        exit;
+    end;
 begin
   valID := True;
   for i := 1 to Length(s) do
@@ -49,6 +62,7 @@ begin
       Break;
     end;
   end;
+end;
 end;
 
 procedure existearchivo; 
