@@ -1,0 +1,21 @@
+registro de alumnos
+alumno 1:
+Nombre: Josue
+id: 555
+
+alumno 2:
+Nombre: Christopher
+id: 666
+
+alumno 3:
+Nombre: Pedro maricon
+id: 777
+
+alumno 1:
+Nombre: 123
+id: 123
+
+alumno 2:
+Nombre: nip
+id: 1331
+

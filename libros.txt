@@ -1,0 +1,13 @@
+registro de libros
+libro 1:
+Nombre: The way of the kings
+
+libro 2:
+Nombre: Words of radiance
+
+libro 3:
+Nombre: oathbringer
+
+libro 4:
+Nombre: Rythim of war
+
