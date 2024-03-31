@@ -1,9 +1,11 @@
 program untitled;
 
 uses crt,sysutils;
+
 type
 alumno=record
 nombre:string;
+apellido:string;
 id:string;
 end;
 libro=record
@@ -14,36 +16,54 @@ prestamos=record
 id:string;
 nombredelibro:string;
 end;
+
 var 
 linea:string;
 n:char;
-archivo:text;
-archivo1: text;
-archivo2: text;
+archivo,archivo1,archivo2: text;
 persona3:prestamos;
 persona2:libro;
 persona1: alumno;
-contador: integer;
-contador1: integer;
-contador2: integer;
-function valID(s: string): boolean;
-var i: integer;
+contador,contador1,contador2,i: integer;
 
+function valnombre(word: String): Boolean;
 begin
-    valID:=true;
-    if (s='') then
+  if (word='') then
+    begin
+        valnombre:=false;
+        exit;
+    end;
+begin
+  valnombre := True;
+  for i := 1 to Length(word) do
+  begin
+    if not (UpCase(word[i]) in ['A'..'Z']) then
+    begin
+      valnombre := False;
+      Break;
+    end;
+  end;
+end;
+end;
+
+function valID(s: String): Boolean;
+begin
+   if (s='') then
     begin
         valID:=false;
         exit;
     end;
-    for i:=1 to length(s) do
+begin
+  valID := True;
+  for i := 1 to Length(s) do
+  begin
+    if not (s[i] in ['0'..'9']) then
     begin
-        if not (s[i] in ['0'..'9']) then
-        begin
-            valID:=false;
-            exit;
-        end;
+      valID := False;
+      Break;
     end;
+  end;
+end;
 end;
 
 procedure existearchivo; 
@@ -74,7 +94,7 @@ begin
 
 procedure existearchivo2; 
 begin
-    if (FileExists('prestamos.txt')) then
+    if not (FileExists('prestamos.txt')) then
     begin
 		assign(archivo2, 'prestamos.txt');
 		rewrite(archivo2);
@@ -90,24 +110,40 @@ begin
   append(archivo); 
   contador := 1;
 repeat
+	repeat
+	clrscr;
     writeln('Ingrese el nombre del alumno:');
     readln(persona1.nombre);
-  
-    writeln('Ingrese el id del alumno:');
+    if not valnombre(persona1.nombre) then
+    writeln('dato ingresado no valido');
+    delay(1500);
+    until valnombre(persona1.nombre);
+    repeat
+    clrscr;
+    writeln('Ingrese el apellido del alumno:');
+    readln(persona1.apellido);
+    if not valnombre(persona1.apellido) then
+    writeln('dato ingresado no valido');
+    delay(1500);
+    until valnombre(persona1.apellido);
+    repeat
+    clrscr;
+    writeln('Ingrese la cedula del alumno:');
     readln(persona1.id);
+    if not valID(persona1.id) then
+    writeln('dato ingresado no valido');
+    delay(1500);
+    until valID(persona1.id);
     writeln(archivo, 'alumno ', contador, ':');
     writeln(archivo, 'Nombre: ', persona1.nombre);
-    writeln(archivo, 'id: ', persona1.id);
+    writeln(archivo, 'Apellido: ',persona1.apellido);
+    writeln(archivo, 'cedula: ', persona1.id);
     writeln(archivo);
-    
     writeln('¿Desea ingresar otro alumno? (S/N)');
     readln(n);
-    
     contador := contador + 1; // Incrementa el contador de personas
   until (upcase(n) = 'N');
-  
   close(archivo); // Cierra el archivo
-  
   writeln('Registros guardados en el archivo "alumnos.txt"');
 end;
 
@@ -148,15 +184,22 @@ begin
     end;
     
 procedure registrarprestamos;
+var
+n : char;
 begin
   append(archivo2); 
   contador2 := 1;
 repeat
-	writeln('Ingrese el id del alumno:');
+	writeln('Ingrese la cedula del alumno:');
     readln(persona3.id);
     writeln('Ingrese el nombre del libro:');
     readln(persona3.nombredelibro);
-    writeln(archivo2);
+    writeln(archivo2, 'Prestamo ', contador2, ':');
+    writeln(archivo2, 'cedula: ', persona3.id);
+    writeln(archivo2, 'nombre de libro: ', persona3.nombredelibro);
+    
+    writeln('Hacer otro prestamo? S/N');
+    n := readkey;
     
     contador2 := contador2 + 1; // Incrementa el contador de personas
   until (upcase(n) = 'N');
@@ -185,7 +228,6 @@ begin
 end;
 
 procedure RegistrarLibros;
-
 begin 
   append(archivo1); 
   contador1 := 1;
@@ -284,5 +326,5 @@ BEGIN
 			end;
         end;
 	until (n='4');
-	
+	writeln('gracias por usar la biblioteca de unimar');
 END.
