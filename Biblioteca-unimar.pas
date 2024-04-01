@@ -19,6 +19,12 @@ id:string;
 nombredelibro:string;
 end;
 
+castigo=record
+nombre:string;
+cedula:string;
+razon: string;
+end;
+
 trabajo=record
 nombre : string
 end;
@@ -26,14 +32,15 @@ end;
 var 				//variables
 linea:string;		
 n:char;
-archivo,archivo1,archivo2,archivo4: text;			//archivos de texto de alumnos, libros y prestamos
+archivo,archivo1,archivo2,archivo3,archivo4: text;			//archivos de texto de alumnos, libros y prestamos
 persona3:prestamos;							//ruta de prestamos
+persona5:castigo;
 persona2:libro;								//ruta de libro	
 persona1: alumno; 						//ruta de alumnos
 persona4:trabajo;						//ruta de trabajo
 contador,contador1,contador2,i: integer;
 
-function valnombre(word: String): Boolean;		//validacion de nombre de nombre,  solo letras, sin espacios
+function valnombre(word: String): Boolean;		//validacion de nombre de nombre,  solo letras, sin espacios, ni numeros.
 begin
   if (word='') then
     begin
@@ -125,6 +132,19 @@ begin
         assign(archivo4, 'trabajo.txt');
         end;
         
+procedure existearchivo4; 		//revisa si existe el archivo de castigo, si no lo crea
+begin
+    if not (FileExists('castigo.txt')) then
+    begin
+		assign(archivo3, 'castigo.txt');
+		rewrite(archivo3);
+		writeln(archivo3, 'registro de castigo');
+        close(archivo3);
+        end
+        else
+        assign(archivo3, 'castigo.txt');
+        end;
+        
 procedure RegistrarAlumnos;				//lee los datos del alumno y los guarda en el archivo
 begin 
   append(archivo); 
@@ -213,6 +233,20 @@ begin
     close( archivo1 );   
     end;
     
+ procedure leer5; //lo mismo mismo pero con prestamos
+begin
+ reset( archivo3 );                
+    while not eof( archivo3) do
+    begin
+        readLn( archivo3, linea );    
+        writeLn( linea );  
+    end;
+    readkey;
+    close( archivo3 );   
+    end;
+    
+ 
+    
 procedure registrarprestamos; //registra un prestamo y lo guarda en su archivo
 var
 n : char;
@@ -265,12 +299,10 @@ begin
   append(archivo1); 
   contador1 := 1;
 repeat
-repeat
+
     writeln('Ingrese el nombre del libro:');
     readln(persona2.nombre);
-    if not valnombre(persona2.nombre) then
-    writeln('dato ingresado no valido');
-    until valnombre(persona2.nombre);
+    
     writeln(archivo1, 'Nombre: ', persona2.nombre);
     writeln(archivo1);
     
@@ -284,17 +316,14 @@ repeat
   writeln('Registros guardados en el archivo "libros.txt"');
 end;
 
-procedure registrarTrabajos;
+procedure registrarTrabajos; //registra trabajos y los guarda en el archivo
 begin 
   append(archivo4); 
   contador1 := 1;
 repeat
-repeat
+
     writeln('Ingrese el nombre del Trabajo:');
     readln(persona4.nombre);
-    if not valnombre(persona4.nombre) then
-    writeln('dato ingresado no valido');
-    until valnombre(persona4.nombre);
     writeln(archivo4, 'Nombre: ', persona4.nombre);
     writeln(archivo4);
     
@@ -307,11 +336,49 @@ repeat
   
 end;
 
+procedure registrarcastigo; //registra trabajos y los guarda en el archivo
+begin 
+  append(archivo3); 
+  contador1 := 1;
+repeat
+repeat
+    writeln('Ingrese el nombre del estudiante:');
+    readln(persona5.nombre);
+    if not valnombre(persona5.nombre) then
+    writeln('dato ingresado no valido');
+    until valnombre(persona5.nombre);
+    writeln(archivo3, 'Nombre: ', persona5.nombre);
+    
+    
+    repeat
+    writeln('Ingrese la cedula del estudiante');
+    readln(persona5.cedula);
+    if not ValID (persona5.cedula) then
+    writeln('dato ingresado no valido');
+    until ValID(persona5.cedula);
+    writeln(archivo3, 'cedula ', persona5.cedula);
+    
+
+    writeln('Ingrese la razon de la penalizacion');
+    readln(persona5.razon);
+    writeln(archivo3, 'Razon: ',persona5.razon);
+    writeln(archivo3);
+    
+    writeln('¿Desea registrar otro castigo? (S/N)');
+    readln(n);
+    
+  until (upcase(n) = 'N');
+  
+  close(archivo3); // Cierra el archivo
+  
+end;
+
 BEGIN
    existearchivo;
    existearchivo1;
    existearchivo2;
    existearchivo3;
+   existearchivo4;
     writeln('Bienvenido al sistema de biblioteca de unimar ');
     writeln('Presione cualquier tecla para continuar...    ');
     readkey;
@@ -329,8 +396,9 @@ BEGIN
 					 writeln('Por favor indique la operacion a realizar:    ');
 				 writeln('1. ingresar nuevos alumnos');
 				 writeln('2. ver datos de alumnos');
-				 writeln('3. revisar alumnos sancionados');
-				 writeln('0. ir al menu');
+				 writeln('3. Ingresar alumno sancionado');
+				 writeln('4. Ver alumnos sancionados');
+				 writeln('5. ir al menu');
 				 n:=readkey;
 				 clrscr;
 				   case n of
@@ -341,9 +409,12 @@ BEGIN
 						leer;
 						end;
 					'3':begin
-						boom;
+						registrarcastigo;
 					end;
-					'0':begin
+					'4':begin
+					leer5;
+					end;
+					'5':begin
 					end;
 				end;
 			end;
@@ -351,7 +422,7 @@ BEGIN
 				 writeln('Por favor indique la operacion a realizar:    ');
 				 writeln('1. Registrar prestamos');
 				 writeln('2. Revisar prestamos activo');
-				 writeln('0. ir al menu');
+				 writeln('5. ir al menu');
 				 n:=readkey;
 				 clrscr;
 			     case n of
@@ -372,7 +443,7 @@ BEGIN
 				writeln('3. Ingresar trabajos');
 				writeln('4. Trabajos disponibles');
 				
-				 writeln('0. ir al menu');
+				 writeln('5. ir al menu');
 				n:=readkey;
 				clrscr;
 					case n of
