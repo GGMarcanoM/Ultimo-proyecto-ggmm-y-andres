@@ -19,13 +19,18 @@ id:string;
 nombredelibro:string;
 end;
 
+trabajo=record
+nombre : string
+end;
+
 var 				//variables
 linea:string;		
 n:char;
-archivo,archivo1,archivo2: text;			//archivos de texto de alumnos, libros y prestamos
+archivo,archivo1,archivo2,archivo4: text;			//archivos de texto de alumnos, libros y prestamos
 persona3:prestamos;							//ruta de prestamos
 persona2:libro;								//ruta de libro	
-persona1: alumno;							//ruta de alumnos
+persona1: alumno; 						//ruta de alumnos
+persona4:trabajo;						//ruta de trabajo
 contador,contador1,contador2,i: integer;
 
 function valnombre(word: String): Boolean;		//validacion de nombre de nombre,  solo letras, sin espacios
@@ -107,6 +112,19 @@ begin
         assign(archivo2, 'prestamos.txt');
         end;
         
+procedure existearchivo3; 		//revisa si existe el archivo de prestamos, si no lo crea
+begin
+    if not (FileExists('trabajo.txt')) then
+    begin
+		assign(archivo4, 'trabajo.txt');
+		rewrite(archivo4);
+		writeln(archivo4, 'registro de trabajos');
+        close(archivo4);
+        end
+        else
+        assign(archivo4, 'trabajo.txt');
+        end;
+        
 procedure RegistrarAlumnos;				//lee los datos del alumno y los guarda en el archivo
 begin 
   append(archivo); 
@@ -169,6 +187,18 @@ begin
     end;
     readkey;
     close( archivo2 );   
+    end;
+    
+procedure leer3;		//lo mismo de arriba pero para trabajo
+begin
+ reset( archivo4 );                
+    while not eof( archivo4) do
+    begin
+        readLn( archivo4, linea );    
+        writeLn( linea );  
+    end;
+    readkey;
+    close( archivo4 );   
     end;
     
     procedure leer1; //lo mismo mismo pero con prestamos
@@ -246,10 +276,30 @@ repeat
   writeln('Registros guardados en el archivo "libros.txt"');
 end;
 
+procedure registrarTrabajos;
+begin 
+  append(archivo4); 
+  contador1 := 1;
+repeat
+    writeln('Ingrese el nombre del Trabajo:');
+    readln(persona4.nombre);
+    writeln(archivo4, 'Nombre: ', persona4.nombre);
+    writeln(archivo4);
+    
+    writeln('¿Desea ingresar otro trabajo? (S/N)');
+    readln(n);
+    
+  until (upcase(n) = 'N');
+  
+  close(archivo4); // Cierra el archivo
+  
+end;
+
 BEGIN
    existearchivo;
    existearchivo1;
    existearchivo2;
+   existearchivo3;
     writeln('Bienvenido al sistema de biblioteca de unimar ');
     writeln('Presione cualquier tecla para continuar...    ');
     readkey;
@@ -258,8 +308,8 @@ BEGIN
         writeln('Por favor indique la operacion a realizar:  ');
         writeln('1. alumno   ');
         writeln('2. Prestamos   ');
-        writeln('3. Libros      ');
-        writeln('4. Salir.     ');
+        writeln('3. Libros y trabajos  ');
+        writeln('0. Salir.     ');
         n:=readkey;
         clrscr;
         case n of
@@ -307,6 +357,9 @@ BEGIN
 				writeln('Por favor indique la operacion a realizar:');
 				writeln('1. Ingresar nuevo libro');
 				writeln('2. libros disponibles');
+				writeln('3. Ingresar trabajos');
+				writeln('4. Trabajos disponibles');
+				
 				 writeln('0. ir al menu');
 				n:=readkey;
 				clrscr;
@@ -317,11 +370,17 @@ BEGIN
 						'2':begin
 						leer1;
 						end;
+						'3': begin
+						registrarTrabajos;
+						end;
+						'4': begin
+						leer3;
+						end;
 						'0':begin
 						end;
 					end;
 			end;
         end;
-	until (n='4');
+	until (n='0');
 	writeln('gracias por usar la biblioteca de unimar');
 END.
