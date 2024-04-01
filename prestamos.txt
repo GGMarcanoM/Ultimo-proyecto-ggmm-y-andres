@@ -1,1 +1,4 @@
 registro de prestamos
+Prestamo :
+cedula: 3213123
+nombre de libro: El imperio final

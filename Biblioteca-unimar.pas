@@ -1,32 +1,34 @@
-program untitled;
+program bibliotecaunimar;
 
 uses crt,sysutils;
 
-type
+type                //registro de informacion de los estudiantes
 alumno=record
 nombre:string;
 apellido:string;
 id:string;
 end;
-libro=record
+
+libro=record  		//registro de informacion de los libros
 id:string;
 nombre:string;
 end;
-prestamos=record
+
+prestamos=record 	//registro de informacion de los prestamos
 id:string;
 nombredelibro:string;
 end;
 
-var 
-linea:string;
+var 				//variables
+linea:string;		
 n:char;
-archivo,archivo1,archivo2: text;
-persona3:prestamos;
-persona2:libro;
-persona1: alumno;
+archivo,archivo1,archivo2: text;			//archivos de texto de alumnos, libros y prestamos
+persona3:prestamos;							//ruta de prestamos
+persona2:libro;								//ruta de libro	
+persona1: alumno;							//ruta de alumnos
 contador,contador1,contador2,i: integer;
 
-function valnombre(word: String): Boolean;
+function valnombre(word: String): Boolean;		//validacion de nombre de nombre,  solo letras, sin espacios
 begin
   if (word='') then
     begin
@@ -46,7 +48,7 @@ begin
 end;
 end;
 
-function valID(s: String): Boolean;
+function valID(s: String): Boolean;		//validacion de id
 begin
    if (s='') then
     begin
@@ -66,7 +68,7 @@ begin
 end;
 end;
 
-procedure existearchivo; 
+procedure existearchivo; //revisa si existe el archivo de alumnos, si no existe lo crea
 begin
     if not (FileExists('alumnos.txt')) then
     begin
@@ -79,7 +81,7 @@ begin
         assign(archivo, 'alumnos.txt');
         end;
         
-procedure existearchivo1; 
+procedure existearchivo1; 			//revisa si existe el archivo de libros, si no existe lo crea
 begin
     if not (FileExists('libros.txt')) then
     begin
@@ -92,7 +94,7 @@ begin
         assign(archivo1, 'libros.txt');
         end;
 
-procedure existearchivo2; 
+procedure existearchivo2; 		//revisa si existe el archivo de prestamos, si no lo crea
 begin
     if not (FileExists('prestamos.txt')) then
     begin
@@ -105,7 +107,7 @@ begin
         assign(archivo2, 'prestamos.txt');
         end;
         
-procedure RegistrarAlumnos;
+procedure RegistrarAlumnos;				//lee los datos del alumno y los guarda en el archivo
 begin 
   append(archivo); 
   contador := 1;
@@ -134,20 +136,18 @@ repeat
     writeln('dato ingresado no valido');
     delay(1500);
     until valID(persona1.id);
-    writeln(archivo, 'alumno ', contador, ':');
     writeln(archivo, 'Nombre: ', persona1.nombre);
     writeln(archivo, 'Apellido: ',persona1.apellido);
     writeln(archivo, 'cedula: ', persona1.id);
     writeln(archivo);
     writeln('¿Desea ingresar otro alumno? (S/N)');
     readln(n);
-    contador := contador + 1; // Incrementa el contador de personas
   until (upcase(n) = 'N');
   close(archivo); // Cierra el archivo
   writeln('Registros guardados en el archivo "alumnos.txt"');
 end;
 
-procedure leer;
+procedure leer; 		//lee el archivo de alumno para leerlo
 begin
  reset( archivo );                
     while not eof( archivo) do
@@ -159,7 +159,7 @@ begin
     close( archivo );   
     end;
     
-procedure leer2;
+procedure leer2;		//lo mismo de arriba pero para libro
 begin
  reset( archivo2 );                
     while not eof( archivo2) do
@@ -171,7 +171,7 @@ begin
     close( archivo2 );   
     end;
     
-    procedure leer1;
+    procedure leer1; //lo mismo mismo pero con prestamos
 begin
  reset( archivo1 );                
     while not eof( archivo1) do
@@ -183,7 +183,7 @@ begin
     close( archivo1 );   
     end;
     
-procedure registrarprestamos;
+procedure registrarprestamos; //registra un prestamo y lo guarda en su archivo
 var
 n : char;
 begin
@@ -194,14 +194,13 @@ repeat
     readln(persona3.id);
     writeln('Ingrese el nombre del libro:');
     readln(persona3.nombredelibro);
-    writeln(archivo2, 'Prestamo ', contador2, ':');
+    writeln(archivo2, 'Prestamo ',':');
     writeln(archivo2, 'cedula: ', persona3.id);
     writeln(archivo2, 'nombre de libro: ', persona3.nombredelibro);
     
     writeln('Hacer otro prestamo? S/N');
     n := readkey;
     
-    contador2 := contador2 + 1; // Incrementa el contador de personas
   until (upcase(n) = 'N');
   
   close(archivo2); // Cierra el archivo
@@ -209,7 +208,7 @@ repeat
   writeln('Registros guardados en el archivo "prestamos.txt"');
 end;
 
-procedure boom;
+procedure boom; //es un meme
 var
   i : longint;
   u : longint;
@@ -234,14 +233,12 @@ begin
 repeat
     writeln('Ingrese el nombre del libro:');
     readln(persona2.nombre);
-    writeln(archivo1, 'libro ', contador1, ':');
     writeln(archivo1, 'Nombre: ', persona2.nombre);
     writeln(archivo1);
     
-    writeln('¿Desea ingresar otro virgo? (S/N)');
+    writeln('¿Desea ingresar otro libro? (S/N)');
     readln(n);
     
-    contador1 := contador1 + 1; // Incrementa el contador de personas
   until (upcase(n) = 'N');
   
   close(archivo1); // Cierra el archivo
