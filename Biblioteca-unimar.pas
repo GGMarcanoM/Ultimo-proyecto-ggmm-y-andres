@@ -165,7 +165,7 @@ repeat
   writeln('Registros guardados en el archivo "alumnos.txt"');
 end;
 
-procedure leer; 		//lee el archivo de alumno para leerlo
+procedure leer; 		//abre el archivo de alumno para leerlo
 begin
  reset( archivo );                
     while not eof( archivo) do
@@ -220,8 +220,12 @@ begin
   append(archivo2); 
   contador2 := 1;
 repeat
+repeat
 	writeln('Ingrese la cedula del alumno:');
     readln(persona3.id);
+    if not valID(persona3.id) then
+    writeln('dato ingresado no valido');
+    until valID(persona3.id);
     writeln('Ingrese el nombre del libro:');
     readln(persona3.nombredelibro);
     writeln(archivo2, 'Prestamo ',':');
@@ -261,8 +265,12 @@ begin
   append(archivo1); 
   contador1 := 1;
 repeat
+repeat
     writeln('Ingrese el nombre del libro:');
     readln(persona2.nombre);
+    if not valnombre(persona2.nombre) then
+    writeln('dato ingresado no valido');
+    until valnombre(persona2.nombre);
     writeln(archivo1, 'Nombre: ', persona2.nombre);
     writeln(archivo1);
     
@@ -281,8 +289,12 @@ begin
   append(archivo4); 
   contador1 := 1;
 repeat
+repeat
     writeln('Ingrese el nombre del Trabajo:');
     readln(persona4.nombre);
+    if not valnombre(persona4.nombre) then
+    writeln('dato ingresado no valido');
+    until valnombre(persona4.nombre);
     writeln(archivo4, 'Nombre: ', persona4.nombre);
     writeln(archivo4);
     
@@ -305,7 +317,7 @@ BEGIN
     readkey;
     repeat
         clrscr;
-        writeln('Por favor indique la operacion a realizar:  ');
+        writeln('Por favor indique el apartado:  ');
         writeln('1. alumno   ');
         writeln('2. Prestamos   ');
         writeln('3. Libros y trabajos  ');
