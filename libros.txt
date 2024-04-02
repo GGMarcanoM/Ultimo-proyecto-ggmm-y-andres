@@ -1,19 +1,59 @@
 registro de libros
+Nombre: Una vida en nuestro planeta
 
-Nombre: The way of the kings
+Nombre: Los matematicos serios son los que no se rien nunca
 
+Nombre: erase una vez los numeros primos
 
-Nombre: Words of radiance
+Nombre: Construye tus propios robots
 
+Nombre: Breves respuestas a las grandes preguntas
 
-Nombre: oathbringer
+Nombre: La teoria del todo
 
+Nombre: Yo IA
 
-Nombre: Rythim of war
+Nombre: Cien anyos de soledad
 
-Nombre: Mistborn 1, el imperio final
+Nombre: El diario de Ana Frank
 
-Nombre: 
+Nombre: El paisaje cosmico
 
-Nombre: 
+Nombre: El camino de los reyes
+
+Nombre: Palabras radiantes
+
+Nombre: Juramentada
+
+Nombre: EL ritmo de la guerra
+
+Nombre: El imperio final
+
+Nombre: El heroe de las eras
+
+Nombre: El pozo de la ascension
+
+Nombre: Aleacion de ley
+
+Nombre: Sombras de identidad
+
+Nombre: Brazales de duelo
+
+Nombre: El metal perdido
+
+Nombre: Elantris
+
+Nombre: Phantom blood
+
+Nombre: Battle tendency
+
+Nombre: Stardust Crusaders
+
+Nombre: Diamond is umbreakable
+
+Nombre: Golden wind
+
+Nombre: Stone ocean
+
+Nombre: Steel ball run
 

@@ -223,11 +223,13 @@ begin
     
     procedure leer1; //lo mismo mismo pero con prestamos
 begin
+writeln('Presione enter para que aparezcan los libros');
  reset( archivo1 );                
     while not eof( archivo1) do
     begin
         readLn( archivo1, linea );    
         writeLn( linea );  
+        readln();
     end;
     readkey;
     close( archivo1 );   
@@ -235,6 +237,7 @@ begin
     
  procedure leer5; //lo mismo mismo pero con prestamos
 begin
+writeln('Presione enter para que aparezcan los alum');
  reset( archivo3 );                
     while not eof( archivo3) do
     begin
